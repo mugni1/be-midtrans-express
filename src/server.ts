@@ -8,7 +8,7 @@ const app = express()
 app.use(express.json())
 app.use(cors({
     origin: [
-        "https://app.port1.mugni.my.id/",
+        "https://app.port1.mugni.my.id",
         "https://fe-midtrans-vue.vercel.app"
     ],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
