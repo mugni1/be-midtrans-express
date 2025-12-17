@@ -20,10 +20,11 @@ app.use(cors({
 }))
 
 // routes
-app.get("/", (req: Request, res: Response) => response({ res, message: "Welcome Bro" }))
+app.get("/", (_, res: Response) => response({ res, message: "Welcome Bro" }))
 app.use(PaymentRoute)
 app.use("/auth", AuthRoute)
 app.use("/category", CategoryRoute)
+app.use((_, res: Response) => response({ res, status: 404, message: "Route Not Found" }));
 
 // listening for dev
 app.listen(5051, () => console.log("Server up and running"))
