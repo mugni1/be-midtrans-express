@@ -26,7 +26,7 @@ export const register = async (req: Request, res: Response) => {
       return response({ res, status: 400, message: "Failed to register user" });
     }
 
-    response({ res, status: 201, message: "User registered successfully", data: data });
+    response({ res, status: 201, message: "User registered successfully", data: { ...result, password: null } });
   } catch (errors: unknown) {
     response({ res, status: 500, message: "Internal Server Error", errors });
   }
