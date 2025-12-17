@@ -43,3 +43,11 @@ export const getUserByPhoneService = async (phone: string) => {
     }
   })
 }
+
+export const getUserByIdService = async (id: string) => {
+  return await prisma.user.findUnique({
+    where: {
+      id: id
+    }
+  })
+}

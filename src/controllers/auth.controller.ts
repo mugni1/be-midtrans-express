@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { response } from "../utils/response.js";
 import { LoginPayload, loginValidate, RegisterPayload, registerValidate } from "../validations/auth.validation.js";
-import { countUserWithEmailService, countUserWithPhoneService, getUserByEmailService, registerService } from "../services/auth.service.js";
+import { countUserWithEmailService, countUserWithPhoneService, getUserByEmailService, getUserByIdService, registerService } from "../services/auth.service.js";
 import { comparePassword, hashedPassword } from "../utils/bcrypt.js";
 import { generateToken } from "../utils/jwt.js";
 import "dotenv/config";
@@ -57,6 +57,21 @@ export const login = async (req: Request, res: Response) => {
     const token = generateToken({ id: user.id, name: user.name, role: user.role });
     user.password = null;
     response({ res, status: 200, message: "Login successfully", data: { token, user } });
+  } catch (errors: unknown) {
+    response({ res, status: 500, message: "Internal Server Error", errors });
+  }
+}
+
+export const me = async (req: Request, res: Response) => {
+  const id = req.userId as string;
+  try {
+    const user = await getUserByIdService(id);
+    if (!user) {
+      return response({ res, status: 404, message: "User not found" });
+    }
+    user.password = null;
+    
+    response({ res, status: 200, message: "Get user successfully", data: user });
   } catch (errors: unknown) {
     response({ res, status: 500, message: "Internal Server Error", errors });
   }
