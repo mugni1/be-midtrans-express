@@ -1,7 +1,27 @@
 import { Request, Response } from "express";
-import { countCategoryByIdService, countCategoryByNameService, createCategoryService, deleteCategoryService, updateCategoryService } from "../services/category.service.js";
+import { countCategoryByIdService, countCategoryByNameService, countCategoryService, createCategoryService, deleteCategoryService, getCategoryService, updateCategoryService } from "../services/category.service.js";
 import { response } from "../utils/response.js";
 import { createUpdateCategoryValidation } from "../validations/category.validation.js";
+import { meta } from "../utils/meta.js";
+
+export const getCategory = async (req: Request, res: Response) => {
+  const search = req.query?.search as string;
+  const limit = Number(req.query?.limit) || 10;
+  const page = Number(req.query?.page) || 1;
+  const offset = Number(limit * (page - 1));
+
+  try {
+    const category = await getCategoryService({ limit, offset, search, page });
+    if (!category) {
+      return response({ res, status: 404, message: "Category not found" });
+    }
+    const total = await countCategoryService({ search });
+
+    return response({ res, status: 200, message: "Category retrieved successfully", data: category, meta: meta({ limit, page, offset, search, total }) });
+  } catch (errors: unknown) {
+    return response({ res, status: 500, message: "Internal server error", errors });
+  }
+};
 
 export const createCategory = async (req: Request, res: Response) => {
   try {
