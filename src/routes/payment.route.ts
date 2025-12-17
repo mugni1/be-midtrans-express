@@ -2,6 +2,6 @@ import e from "express"
 import { postPayment } from "../controllers/payment.controller.js"
 
 const router = e.Router()
-router.post("/payment", postPayment)
+router.post("/", postPayment)
 
 export default router

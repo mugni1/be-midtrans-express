@@ -1,9 +1,10 @@
-import express, { Request, Response } from "express"
+import express, { Response } from "express"
 import cors from "cors"
 import { response } from "./utils/response.js"
 import PaymentRoute from "./routes/payment.route.js"
 import AuthRoute from "./routes/auth.route.js"
 import CategoryRoute from "./routes/category.route.js"
+import ItemRoute from "./routes/item.route.js"
 
 // initialization
 const app = express()
@@ -21,12 +22,12 @@ app.use(cors({
 
 // routes
 app.get("/", (_, res: Response) => response({ res, message: "Welcome Bro" }))
-app.use(PaymentRoute)
+app.use("/payment", PaymentRoute)
 app.use("/auth", AuthRoute)
 app.use("/category", CategoryRoute)
+app.use("/item", ItemRoute)
 app.use((_, res: Response) => response({ res, status: 404, message: "Route Not Found" }));
 
 // listening for dev
 app.listen(5051, () => console.log("Server up and running"))
-
 export default app
