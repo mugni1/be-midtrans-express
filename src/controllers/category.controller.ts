@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { countCategoryByIdService, countCategoryByNameService, countCategoryService, createCategoryService, deleteCategoryService, getCategoryService, updateCategoryService } from "../services/category.service.js";
 import { response } from "../utils/response.js";
 import { createUpdateCategoryValidation } from "../validations/category.validation.js";
-import { meta } from "../utils/meta.js";
 import { Meta } from "../types/meta.type.js";
 
 export const getCategory = async (req: Request, res: Response) => {
