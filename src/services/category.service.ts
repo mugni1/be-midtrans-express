@@ -6,10 +6,10 @@ import { CreateUpdateCategoryPayload } from "../validations/category.validation.
 export const getCategoryService = async (query: QueryParams) => {
   return await prisma.category.findMany({
     where: {
-      name: {
-        contains: query.search,
-        mode: 'insensitive'
-      }
+      OR: [
+        { name: { contains: query.search, mode: 'insensitive' } },
+        { code: { contains: query.search, mode: 'insensitive' } }
+      ]
     },
     skip: query.offset,
     take: query.limit
