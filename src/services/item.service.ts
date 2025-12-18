@@ -59,3 +59,11 @@ export const deleteItemService = async (id: string) => {
     }
   })
 }
+
+export const getItemByIdService = async (id: string) => {
+  return await prisma.item.findUnique({
+    where: {
+      id
+    }
+  })
+}

@@ -1,11 +1,12 @@
 import { Request, Response } from "express";
 import { response } from "../utils/response.js";
 import { createUpdateItemValidation } from "../validations/item.validation.js";
-import { countItemByIdService, createItemService, deleteItemService, getItemsService, updateItemSerevice } from "../services/item.service.js";
+import { countItemByIdService, createItemService, deleteItemService, getItemByIdService, getItemsService, updateItemSerevice } from "../services/item.service.js";
 import { countCategoryByIdService } from "../services/category.service.js";
 import { Meta } from "../types/meta.type.js";
 import fileUpload from "express-fileupload";
 import { imageValidateAndUpload } from "../utils/image.js";
+import cloudinary from "../libs/cloudinary.js";
 
 export const getItems = async (req: Request, res: Response) => {
   const search = req.query.search?.toString() || "";
@@ -95,11 +96,12 @@ export const deleteItem = async (req: Request, res: Response) => {
   const id = req.params.id
 
   try {
-    const isExistItem = await countItemByIdService(id)
-    if (isExistItem < 1) {
+    const isExistItem = await getItemByIdService(id)
+    if (!isExistItem) {
       return response({ res, message: "Item not found", status: 404 })
     }
 
+    await cloudinary.uploader.destroy(isExistItem.imageId)
     const deleted = await deleteItemService(id)
     if (!deleted) {
       return response({ res, message: "Item deleting failed", status: 500 })
