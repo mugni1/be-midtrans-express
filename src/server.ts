@@ -1,5 +1,6 @@
 import express, { Response } from "express"
 import cors from "cors"
+import fileUpload from "express-fileupload"
 import { response } from "./utils/response.js"
 import PaymentRoute from "./routes/payment.route.js"
 import AuthRoute from "./routes/auth.route.js"
@@ -9,6 +10,9 @@ import ItemRoute from "./routes/item.route.js"
 // initialization
 const app = express()
 app.use(express.json())
+app.use(fileUpload({
+  limits: { fileSize: 5 * 1024 * 1024 },
+}));
 app.use(cors({
   origin: [
     "http://localhost:5173",

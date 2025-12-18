@@ -15,11 +15,12 @@ export const getItemsService = async (query: QueryParams) => {
   });
 };
 
-export const createItemService = async (payload: CreateUpdateItemPayload) => {
+export const createItemService = async (payload: CreateUpdateItemPayload, imageUrl: string, imageId: string) => {
   return await prisma.item.create({
     data: {
       name: payload.name,
-      imageUrl: payload.image_url,
+      imageUrl: imageUrl,
+      imageId: imageId,
       price: payload.price,
       categoryId: payload.category_id,
       merchantName: payload.merchant_name
@@ -27,14 +28,15 @@ export const createItemService = async (payload: CreateUpdateItemPayload) => {
   })
 }
 
-export const updateItemSerevice = async (id: string, payload: CreateUpdateItemPayload) => {
+export const updateItemSerevice = async (id: string, payload: CreateUpdateItemPayload, imageUrl?: string, imageId?: string) => {
   return await prisma.item.update({
     where: {
       id
     },
     data: {
       name: payload.name,
-      imageUrl: payload.image_url,
+      imageUrl: imageUrl,
+      imageId: imageId,
       price: payload.price,
       categoryId: payload.category_id,
       merchantName: payload.merchant_name

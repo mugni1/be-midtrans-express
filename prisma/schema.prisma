@@ -52,6 +52,7 @@ model Item {
   name         String      @db.VarChar(50)
   merchantName String      @db.VarChar(50)
   imageUrl     String      @db.Text
+  imageId      String      @db.Text
   price        Int         @db.Integer
   quantity     Int         @default(1) @db.Integer
   categoryId   String
