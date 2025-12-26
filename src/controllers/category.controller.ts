@@ -9,10 +9,12 @@ export const getCategory = async (req: Request, res: Response) => {
   const limit = Number(req.query?.limit) || 10;
   const page = Number(req.query?.page) || 1;
   const offset = Number(limit * (page - 1));
-  const meta: Meta = { search, page, limit, offset, total: 0 };
+  const orderBy = req.query.orderBy?.toString() || "createdAt";
+  const sortBy = req.query.sortBy?.toString() || "desc";
+  const meta: Meta = { search, page, limit, offset, orderBy, sortBy, total: 0 };
 
   try {
-    const data = await getCategoryService({ limit, offset, search, page });
+    const data = await getCategoryService({ limit, offset, search, page, orderBy, sortBy });
     if (!data) {
       return response({ res, status: 404, message: "Category not found" });
     }

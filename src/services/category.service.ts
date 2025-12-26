@@ -11,6 +11,9 @@ export const getCategoryService = async (query: QueryParams) => {
         { code: { contains: query.search, mode: 'insensitive' } }
       ]
     },
+    orderBy: {
+      [query.orderBy]: query.sortBy
+    },
     skip: query.offset,
     take: query.limit
   });

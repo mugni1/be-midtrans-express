@@ -10,6 +10,9 @@ export const getItemsService = async (query: QueryParams) => {
         { merchantName: { contains: query.search, mode: 'insensitive' } },
       ]
     },
+    orderBy: {
+      [query.orderBy]: query.sortBy
+    },
     skip: query.offset,
     take: query.limit
   });

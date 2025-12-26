@@ -4,4 +4,6 @@ export interface QueryParams {
   limit: number;
   page: number;
   offset: number;
+  orderBy: string;
+  sortBy: string
 }
