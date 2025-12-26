@@ -17,6 +17,7 @@ app.use(cors({
   origin: [
     "http://localhost:5173",
     "https://app.port1.mugni.my.id",
+    "https://app.v1.mugni.my.id",
     "https://fe-midtrans-vue.vercel.app"
   ],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
