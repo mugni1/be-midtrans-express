@@ -4,6 +4,8 @@ declare global {
       userId?: string;
       userName?: string;
       userRole?: string;
+      userEmail?: string;
+      userPhone?: string;
     }
   }
 }

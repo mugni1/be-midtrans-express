@@ -8,6 +8,11 @@ import "dotenv/config";
 
 export const createOrder = async (req: Request, res: Response) => {
   const userId = req.userId as string
+  const userName = req.userName as string
+  const userPhone = req.userPhone as string
+  const userEmail = req.userEmail as string
+  
+  // validation body
   const { data, success, error } = createOrderValidation.safeParse(req.body)
   if (!success) {
     const errors = error.issues.map(err => ({ path: err.path.join('.'), message: err.message }))
@@ -19,6 +24,21 @@ export const createOrder = async (req: Request, res: Response) => {
   const trxId = `TRX_${Date.now()}`
   const payload = {
     item_details: data.item_details,
+    customer_details: {
+      first_name: userName,
+      email: userEmail,
+      phone: userPhone,
+      billing_address: {
+        first_name: userName,
+        email: userEmail,
+        phone: userPhone,
+      },
+      shipping_address: {
+        first_name: userName,
+        email: userEmail,
+        phone: userPhone,
+      }
+    },
     transaction_details: {
       order_id: trxId,
       gross_amount: grossAmount
