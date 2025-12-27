@@ -6,6 +6,7 @@ import PaymentRoute from "./routes/payment.route.js"
 import AuthRoute from "./routes/auth.route.js"
 import CategoryRoute from "./routes/category.route.js"
 import ItemRoute from "./routes/item.route.js"
+import OrderRoute from "./routes/order.route.js"
 
 // initialization
 const app = express()
@@ -31,6 +32,7 @@ app.use("/payment", PaymentRoute)
 app.use("/auth", AuthRoute)
 app.use("/category", CategoryRoute)
 app.use("/item", ItemRoute)
+app.use("/order", OrderRoute)
 app.use((_, res: Response) => response({ res, status: 404, message: "Route Not Found" }));
 
 // listening for dev

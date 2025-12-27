@@ -84,8 +84,6 @@ model OrderDetail {
 
 model OrderItem {
   id            String      @id @default(cuid())
-  totalPrice    Int         @db.Integer
-  totalQuantity Int         @db.Integer
   itemId        String
   item          Item        @relation(fields: [itemId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   orderDetailId String
