@@ -52,7 +52,7 @@ export const handleNotification = async (req: Request, res: Response) => {
   // check order detail
   const transaction = await getOrderDetailByTrxId(body.order_id);
   if (transaction) {
-    
+
     // generate hadheh key
     const hashed = crypto.createHash('sha512').update(`${transaction.trxId}${body.status_code}${body.gross_amount}${process.env.MIDTRANS_SERVER_KEY}`).digest('hex');
 

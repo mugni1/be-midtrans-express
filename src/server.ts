@@ -10,10 +10,6 @@ import OrderRoute from "./routes/order.route.js"
 
 // initialization
 const app = express()
-app.use(
-  "/order/notification",
-  express.raw({ type: "application/json" })
-)
 app.use(express.json())
 app.use(fileUpload({
   limits: { fileSize: 5 * 1024 * 1024 },
