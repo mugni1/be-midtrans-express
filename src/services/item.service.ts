@@ -5,11 +5,19 @@ import { CreateUpdateItemPayload } from "../validations/item.validation.js";
 export const getItemsService = async (query: QueryParams) => {
   return await prisma.item.findMany({
     include: {
-      category: { select: { name: true } }
+      category: { select: { name: true, code: true } }
     },
     where: {
       OR: [
         { name: { contains: query.search, mode: 'insensitive' } },
+        {
+          category: {
+            OR: [
+              { name: { contains: query.search, mode: 'insensitive' } },
+              { code: { contains: query.search, mode: 'insensitive' } }
+            ]
+          }
+        },
         { merchantName: { contains: query.search, mode: 'insensitive' } },
       ]
     },
@@ -26,6 +34,14 @@ export const countItemByKeywordService = async (keyword: string) => {
     where: {
       OR: [
         { name: { contains: keyword, mode: 'insensitive' } },
+        {
+          category: {
+            OR: [
+              { name: { contains: keyword, mode: 'insensitive' } },
+              { code: { contains: keyword, mode: 'insensitive' } }
+            ]
+          }
+        },
         { merchantName: { contains: keyword, mode: 'insensitive' } },
       ]
     }
