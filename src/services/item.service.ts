@@ -4,6 +4,9 @@ import { CreateUpdateItemPayload } from "../validations/item.validation.js";
 
 export const getItemsService = async (query: QueryParams) => {
   return await prisma.item.findMany({
+    include: {
+      category: { select: { name: true } }
+    },
     where: {
       OR: [
         { name: { contains: query.search, mode: 'insensitive' } },
