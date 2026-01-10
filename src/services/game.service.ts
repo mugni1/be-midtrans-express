@@ -57,3 +57,9 @@ export const updateGameService = async (id: string, payload: UpdateGamePayload) 
         }
     })
 }
+
+export const deleteGameService = async (id: string) => {
+    return prisma.game.delete({
+        where: { id }
+    })
+}

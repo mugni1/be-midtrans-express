@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { response } from "../utils/response.js"
 import { Meta } from "../types/meta.type.js"
-import { countGamesBySearchService, createGameService, getGamesService, updateGameService } from "../services/game.service.js"
+import { countGamesBySearchService, createGameService, deleteGameService, getGamesService, updateGameService } from "../services/game.service.js"
 import { createGameSchema, updateGameSchema } from "../validations/game.validation.js"
 
 export const getGames = async (req: Request, res: Response) => {
@@ -30,7 +30,7 @@ export const createGame = async (req: Request, res: Response) => {
     }
     try {
         const results = await createGameService(data)
-        response({ res, status: 200, message: "Success created game", data: results })
+        response({ res, status: 201, message: "Success created game", data: results })
     } catch {
         response({ res, status: 500, message: "Internal server error" })
     }
@@ -46,6 +46,16 @@ export const updateGame = async (req: Request, res: Response) => {
     try {
         const results = await updateGameService(id, data)
         response({ res, status: 200, message: "Success update game", data: results })
+    } catch {
+        response({ res, status: 500, message: "Internal server error" })
+    }
+}
+
+export const deleteGame = async (req: Request, res: Response) => {
+    const { id } = req.params
+    try {
+        const results = await deleteGameService(id)
+        response({ res, status: 200, message: "Success delete game", data: results })
     } catch {
         response({ res, status: 500, message: "Internal server error" })
     }
