@@ -9,4 +9,4 @@ export const createGameSchema = z.object({
     cover_id: z.string("image_id is required"),
 })
 
-export type LoginPayload = z.infer<typeof createGameSchema>
+export type CreateGamePayload = z.infer<typeof createGameSchema>

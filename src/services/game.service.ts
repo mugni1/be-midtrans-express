@@ -1,5 +1,6 @@
 import { prisma } from "../libs/prisma.js";
 import { QueryParams } from "../types/param.type.js";
+import { CreateGamePayload } from "../validations/game.validation.js";
 
 export const getGamesService = async (query: QueryParams) => {
     return prisma.game.findMany({
@@ -17,7 +18,6 @@ export const getGamesService = async (query: QueryParams) => {
     })
 }
 
-
 export const countGamesBySearchService = async (query: QueryParams) => {
     return prisma.game.count({
         where: {
@@ -25,6 +25,19 @@ export const countGamesBySearchService = async (query: QueryParams) => {
                 { title: { contains: query.search, mode: 'insensitive' } },
                 { studio: { contains: query.search, mode: 'insensitive' } }
             ]
+        }
+    })
+}
+
+export const createGameService = async (payload: CreateGamePayload) => {
+    return prisma.game.create({
+        data: {
+            title: payload.title,
+            studio: payload.studio,
+            imageUrl: payload.image_url,
+            imageId: payload.image_id,
+            coverUrl: payload.cover_url,
+            coverId: payload.cover_id
         }
     })
 }

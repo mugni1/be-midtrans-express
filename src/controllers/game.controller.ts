@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { response } from "../utils/response.js"
 import { Meta } from "../types/meta.type.js"
-import { countGamesBySearchService, getGamesService } from "../services/game.service.js"
+import { countGamesBySearchService, createGameService, getGamesService } from "../services/game.service.js"
 import { createGameSchema } from "../validations/game.validation.js"
 
 export const getGames = async (req: Request, res: Response) => {
@@ -29,7 +29,8 @@ export const createGame = async (req: Request, res: Response) => {
         return response({ res, status: 400, message: "Invalid input", errors })
     }
     try {
-        response({ res, status: 200, message: "Success created game", data })
+        const results = await createGameService(data)
+        response({ res, status: 200, message: "Success created game", data: results })
     } catch {
         response({ res, status: 500, message: "Internal server error" })
     }
