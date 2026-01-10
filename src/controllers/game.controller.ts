@@ -16,7 +16,7 @@ export const getGames = async (req: Request, res: Response) => {
     try {
         meta.total = await countGamesBySearchService(meta)
         const data = await getGamesService(meta)
-        response({ res, status: 200, message: "Success get all game", data })
+        response({ res, status: 200, message: "Success get all game", data, meta })
     } catch {
         response({ res, status: 500, message: "Internal server error" })
     }
