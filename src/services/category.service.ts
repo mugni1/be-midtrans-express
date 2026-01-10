@@ -1,6 +1,6 @@
 import { prisma } from "../libs/prisma.js";
 import { QueryParams } from "../types/param.type.js";
-import { CreateUpdateCategoryPayload } from "../validations/category.validation.js";
+import { CreateCategoryPayload, UpdateCategoryPayload } from "../validations/category.validation.js";
 
 
 export const getCategoryService = async (query: QueryParams) => {
@@ -30,18 +30,26 @@ export const countCategoryService = async (query: { search: string }) => {
   });
 };
 
-export const createCategoryService = async (payload: CreateUpdateCategoryPayload) => {
+export const createCategoryService = async (payload: CreateCategoryPayload) => {
   return await prisma.category.create({
-    data: payload
+    data: {
+      name: payload.name,
+      code: payload.code,
+      gameId: payload.game_id
+    }
   })
 };
 
-export const updateCategoryService = async (id: string, payload: CreateUpdateCategoryPayload) => {
+export const updateCategoryService = async (id: string, payload: UpdateCategoryPayload) => {
   return await prisma.category.update({
     where: {
       id
     },
-    data: payload
+    data: {
+      name: payload.name,
+      code: payload.code,
+      gameId: payload.game_id
+    }
   })
 };
 
