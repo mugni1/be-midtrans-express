@@ -63,3 +63,16 @@ export const deleteGameService = async (id: string) => {
         where: { id }
     })
 }
+
+export const getDetailGameByIdService = async (id: string) => {
+    return prisma.game.findUnique({
+        include: {
+            categories: {
+                omit: { createdAt: true, updatedAt: true, gameId: true },
+                include: { items: { omit: { createdAt: true, updatedAt: true, categoryId: true }, } }
+            }
+        },
+        where: { id },
+        omit: { createdAt: true, updatedAt: true },
+    })
+}
