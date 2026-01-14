@@ -21,6 +21,7 @@ app.use(cors({
     "http://localhost:5173",
     "https://pos.v1.mugni.my.id",
     "https://app.v1.mugni.my.id",
+    "http://192.168.43.160:5173"
   ],
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
