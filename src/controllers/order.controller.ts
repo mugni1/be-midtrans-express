@@ -118,3 +118,20 @@ export const getOrders = async (req: Request, res: Response) => {
     response({ res, message: "Internal server error", status: 500 })
   }
 }
+
+export const getOrderByTrxId = async (req: Request, res: Response) => {
+  const { trxId } = req.params
+  const userId = req.userId
+  try {
+    const result = await getOrderDetailByTrxId(trxId)
+    if (!result) {
+      return response({ res, status: 404, message: "Order detail not found" })
+    }
+    if (userId != result.userId) {
+      return response({ res, status: 403, message: "Cannot access this order detail" })
+    }
+    response({ res, status: 200, message: "Success get detail order", data: result })
+  } catch {
+    response({ res, status: 500, message: "Internal server errro" })
+  }
+}
